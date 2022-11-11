@@ -1,7 +1,7 @@
 
 
 const fs = require('fs');
-let posts = require('../data/posts.json');
+let posts = require('../../data/posts.json');
 
 export const postController = {
     getAllPosts,

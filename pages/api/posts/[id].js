@@ -1,4 +1,4 @@
-import { postController } from "../../../helpers/posts_controller";
+import { postController } from "../../../helpers/api/posts_controller";
 
 export default function handler(req, res) {
     if (req.method == "GET") {

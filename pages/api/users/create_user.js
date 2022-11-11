@@ -1,4 +1,4 @@
-import { userController } from "../../../helpers/users_controller";
+import { userController } from "../../../helpers/api/users_controller";
 
 export default function handler(req, res) {
     if (req.method == "POST") {

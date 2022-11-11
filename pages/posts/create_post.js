@@ -79,9 +79,10 @@ export default function CreatePost() {
         </Head>
         <div className={styles.post_main}>
         <div className={styles.post_top}>
-            <h1>Create a post?</h1>
+            <h1>Create a post</h1>
             <Image className={`${styles.post_image}`} src={"/images/13798.jpg"} alt={"Post image"} height={144} width={144}></Image>
             <h3>Think hard about what to include!</h3>
+
             { !userdata.username && <h4>You are not logged in, your post will appear as Anonymous.</h4> }
             { userdata.username && <h4>You will appear on the post as '{userdata.username}'.</h4> }
         </div>

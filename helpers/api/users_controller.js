@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
-let users = require('../data/users.json');
+let users = require('../../data/users.json');
 import getConfig from 'next/config';
 const { serverRuntimeConfig } = getConfig();
 
