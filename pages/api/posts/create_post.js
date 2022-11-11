@@ -1,0 +1,35 @@
+import { postController } from "../../../helpers/posts_controller";
+import { userController } from "../../../helpers/users_controller";
+
+export default function handler(req, res) {
+    if (req.method == "POST") {
+        // Handle create post requests
+        const { title, content } = req.body;
+        const auth_token = req.headers.auth;
+        let author_name = "Anonymous";
+        console.log("Auth token: " + auth_token);
+        if (auth_token) {
+            let author_id = userController.checkAuth(auth_token);
+            console.log("Author id: " + author_id);
+            if (author_id != undefined && author_id != null && typeof author_id == "number") {
+                author_name = userController.getUserById(author_id).username;
+            }
+        }
+
+        if (!content || !title || title.length < 1 || content.length < 1 || title.length > 30 || content.length > 255) {
+            res.status(400).json({ error: "Invalid post data!" });
+            return;
+        }
+
+        // Create a new post object
+        let new_post = {
+            title: title,
+            content: content,
+            author: author_name
+        }
+
+        // Add the new post to the posts array
+        postController.createPost(new_post);
+        res.status(200).json({message: "Post created successfully!"});
+    }
+}
