@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^5.2.2",
     "jsonwebtoken": "^8.5.1",
     "next": "13.0.2",
     "react": "18.2.0",
