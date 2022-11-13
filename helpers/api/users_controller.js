@@ -3,6 +3,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 let users = require('../../data/users.json');
 import getConfig from 'next/config';
+import { v4 as uuidv4 } from 'uuid';
 const { serverRuntimeConfig } = getConfig();
 
 export const userController = {
@@ -61,7 +62,7 @@ function checkAuth(token) {
 function registerUser(username, password, email) {
     password = bcrypt.hashSync(password, serverRuntimeConfig.bcrypt_salt);
     let user = {
-        id: users.length,
+        id: uuidv4(),
         username: username,
         password: password,
         email: email

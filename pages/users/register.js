@@ -113,7 +113,7 @@ export default function RegisterAccount() {
                         <input className={styles.input_field} type="password" name="password" id="password" onChange={on_writing_event}></input> <br></br>
                         <label className={styles.input_label} htlmFor="password_confirm">Confirm Password</label> <br></br>
                         <input className={styles.input_field} type="password" name="password_confirm" id="password_confirm" onChange={on_writing_event}></input> <br></br>
-                        <input className={styles.input_field} type="submit" value="Register"></input>
+                        <input className={`${styles.input_field} ${styles.input_button}`} type="submit" value="Register"></input>
                     </form>
                 </div>
             </div>

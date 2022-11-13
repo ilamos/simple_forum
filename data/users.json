@@ -1,1 +1,8 @@
-[{"id":0,"username":"Quack","password":"$2a$10$A80HAREWilfr6PBhH8C.geTChNCLWBzj.MMOTYgtE4ngNMqHtBvnS","email":"quack.hvh@yahoo.com"}]
+[
+  {
+    "id": "f20421db-6755-4495-9e65-bef36c56d2e8",
+    "username": "Quack",
+    "password": "$2a$07$hu89lIHBwlPPFGheM9qC4eK1JHydnYA.y2T1SCKo7hENoE19zsFZe",
+    "email": "quackhvh@yahoo.com"
+  }
+]

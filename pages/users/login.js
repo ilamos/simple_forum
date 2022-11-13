@@ -73,7 +73,7 @@ export default function RegisterAccount() {
                                     }
                                 }).catch((status) => {
 
-                                setError("Failed to log in. (Password incorrect / Wrong username)! " + status);
+                                setError("Failed to log in. (Password incorrect / Wrong username)! ");
                             });
                         }
                     } }>
@@ -82,7 +82,7 @@ export default function RegisterAccount() {
                         <input className={styles.input_field} type="text" name="username" id="username" onChange={on_writing_event}></input> <br></br>
                         <label className={styles.input_label} htmlFor="password">Password</label> <br></br>
                         <input className={styles.input_field} type="password" name="password" id="password" onChange={on_writing_event}></input> <br></br>
-                        <input className={styles.input_field} type="submit" value="Login"></input>
+                        <input className={`${styles.input_field} ${styles.input_button}`} type="submit" value="Login"></input>
                     </form>
                 </div>
             </div>

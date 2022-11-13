@@ -1,5 +1,5 @@
 
-
+import { v4 as uuidv4 } from 'uuid';
 const fs = require('fs');
 let posts = require('../../data/posts.json');
 
@@ -18,7 +18,8 @@ function getPostById(id) {
 }
 
 function createPost(post) {
-    post.id = posts.length;
+    post.id = uuidv4();
+    post.time = new Date(new Date().toUTCString());
     posts.push(post);
     savePosts();
     return post.id;

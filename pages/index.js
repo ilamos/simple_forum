@@ -65,21 +65,22 @@ export default function Home() {
                   <h2 className={styles.post_container_title} >Welcome, {userdata.username}!</h2>
               }
               <div className={styles.button_container}>
-                  <h3 className={styles.top_button}><Link href="posts/create_post">Create a post!</Link></h3>
+                  <Link className={styles.top_button} href="posts/create_post"><h3 >Create a post!</h3></Link>
                   {userdata.username && userdata.user_id && userdata.user_email && userdata.user_token &&
-                      <h3 className={styles.top_button}><Link href="users/logout">Logout</Link></h3>
+                      <Link className={styles.top_button} href="users/logout"><h3>Logout</h3></Link>
                   }
                     {!userdata.username && !userdata.user_id && !userdata.user_email && !userdata.user_token &&
-                  <h3 className={styles.top_button}><Link href="users/register">Register</Link></h3> }
+                        <Link className={styles.top_button} href="users/register"><h3 >Register</h3></Link>}
                   {!userdata.username && !userdata.user_id && !userdata.user_email && !userdata.user_token &&
-                      <h3 className={styles.top_button}><Link href="users/login">Login</Link></h3>  }
+                      <Link className={styles.top_button} href="users/login"><h3>Login</h3></Link>  }
               </div>
 
               {posts && posts.map(post =>
                     <div key={post.id} className={styles.post_main}>
                         <h1>{post.title}</h1>
                         <p className={styles.post_content} >{post.content}</p>
-                        <p className={styles.post_content}>Author: {post.author}</p>
+                        <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
+
                     </div>
               )}
           </div>

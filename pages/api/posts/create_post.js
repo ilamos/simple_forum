@@ -1,5 +1,7 @@
 import { postController } from "../../../helpers/api/posts_controller";
 import { userController } from "../../../helpers/api/users_controller";
+import { stdLog } from "../../../helpers/debug/log_helper";
+
 
 export default function handler(req, res) {
     if (req.method == "POST") {
@@ -11,13 +13,14 @@ export default function handler(req, res) {
         if (auth_token) {
             let author_id = userController.checkAuth(auth_token);
             console.log("Author id: " + author_id);
-            if (author_id != undefined && author_id != null && typeof author_id == "number") {
+            if (author_id != undefined && author_id != null && typeof author_id == "string") {
                 author_name = userController.getUserById(author_id).username;
             }
         }
 
         if (!content || !title || title.length < 1 || content.length < 1 || title.length > 30 || content.length > 255) {
             res.status(400).json({ error: "Invalid post data!" });
+            stdLog.logError("Invalid post data!");
             return;
         }
 

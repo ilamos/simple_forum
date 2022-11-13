@@ -19,6 +19,10 @@
     margin: 5px;
 }
 
+.top_button:hover {
+    background-color: #3d3d3d;
+}
+
 .button_container {
     max-width: 800px;
     padding: 0 1rem;
@@ -99,14 +103,19 @@
 }
 
 .input_field {
-    margin: 0 auto;
     border-radius: 5px;
     background-color: #252525;
-    padding: 3px;
     font-size: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 5px;
+    padding: 3px 10px;
+    margin: 5px auto 0;
+}
+
+.input_field:focus {
+    outline: none;
+}
+
+.input_button:hover {
+    background-color: #3d3d3d;
 }
 
 .input_label {
@@ -117,4 +126,8 @@
 .post_content {
     max-width: 100%;
     word-wrap: break-word;
+}
+
+.post_footer_text {
+    color: #919191;
 }
