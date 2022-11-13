@@ -17,6 +17,17 @@ function getPostById(id) {
     return posts.find(post => post.id == id);
 }
 
+function deletePost(id) {
+    posts = posts.filter(post => post.id != id);
+    savePosts();
+}
+
+function editPostContent(id, content) {
+    let post = getPostById(id);
+    post.content = content;
+    savePosts();
+}
+
 function createPost(post) {
     post.id = uuidv4();
     post.time = new Date(new Date().toUTCString());

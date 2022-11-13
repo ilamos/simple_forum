@@ -46,7 +46,7 @@ function getUserById(id) {
 }
 
 function createAuthToken(user) {
-    const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, { expiresIn: '7d' });
+    const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {});
     return token;
 }
 

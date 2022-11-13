@@ -9,11 +9,13 @@ export default function handler(req, res) {
         const { title, content } = req.body;
         const auth_token = req.headers.auth;
         let author_name = "Anonymous";
-        console.log("Auth token: " + auth_token);
+
+        stdLog.log("Create post request: " + title, "API");
+
         if (auth_token) {
             let author_id = userController.checkAuth(auth_token);
-            console.log("Author id: " + author_id);
             if (author_id != undefined && author_id != null && typeof author_id == "string") {
+                stdLog.log("Author ID: " + author_id, "API");
                 author_name = userController.getUserById(author_id).username;
             }
         }
@@ -34,5 +36,7 @@ export default function handler(req, res) {
         // Add the new post to the posts array
         postController.createPost(new_post);
         res.status(200).json({message: "Post created successfully!"});
+    } else {
+        res.status(400).json({message: "Invalid request!"});
     }
 }

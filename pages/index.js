@@ -77,10 +77,9 @@ export default function Home() {
 
               {posts && posts.map(post =>
                     <div key={post.id} className={styles.post_main}>
-                        <h1>{post.title}</h1>
+                        <Link href={`posts/${post.id}`}><h1>{post.title}</h1></Link>
                         <p className={styles.post_content} >{post.content}</p>
                         <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
-
                     </div>
               )}
           </div>
