@@ -26,7 +26,7 @@ function getAllUsers() {
     for (let i = 0; i < tmp_users.length; i++) {
         delete tmp_users[i].password;
     }
-    return users;
+    return tmp_users;
 }
 
 function getAllUserNames() {
