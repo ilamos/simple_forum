@@ -3,30 +3,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import {useEffect, useState} from "react";
+import {clientAPIhelper} from "../helpers/client/api";
 
-function get_all_posts(post_title, post_content) {
-    return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/posts/get_all_posts", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-
-        }).then((response) => {
-            console.log("Get all posts status: " + response.status.toString());
-            let response_promise = response.json();
-            response_promise.then((response_data) => {
-                // Add the posts to an array
-                let posts = [];
-                for (let i = 0; i < response_data.length; i++) {
-                    posts.push(response_data[i]);
-                }
-                console.log("Response data: " + response_data);
-                resolve(posts);
-            });
-        });
-    });
-}
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -44,12 +22,11 @@ export default function Home() {
             user_email: localStorage.getItem("user_email"),
             user_token: localStorage.getItem("user_token")
         })
-        console.log("User data: " + JSON.stringify(userdata));
     }, [])
 
 
     useEffect(() => {
-        get_all_posts().then(x => { setPosts(x.reverse()); });
+        clientAPIhelper.get_all_posts().then(x => { setPosts(x.reverse()); });
     }, []);
 
     return (
@@ -78,7 +55,7 @@ export default function Home() {
               {posts && posts.map(post =>
                     <div key={post.id} className={styles.post_main}>
                         <Link href={`posts/${post.id}`}><h1>{post.title}</h1></Link>
-                        <p className={styles.post_content} >{post.content}</p>
+                        <p dangerouslySetInnerHTML={{__html: post.content}}></p>
                         <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
                     </div>
               )}

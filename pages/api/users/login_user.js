@@ -1,9 +1,12 @@
 import { userController } from "../../../helpers/api/users_controller";
+import {stdLog} from "../../../helpers/debug/log_helper";
 
 export default function handler(req, res) {
     if (req.method == "POST") {
         // Handle login requests
         const { username, password } = req.body;
+
+        stdLog.log("Login request received for user: " + username, "API");
 
         if (!username || !password || username.length < 2 || password.length < 5 || username.length > 20 || password.length > 50) {
             res.status(400).json({ error: "Invalid login data!" });

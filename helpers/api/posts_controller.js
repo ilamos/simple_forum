@@ -2,11 +2,14 @@
 import { v4 as uuidv4 } from 'uuid';
 const fs = require('fs');
 let posts = require('../../data/posts.json');
+let replies = require('../../data/replies.json');
 
 export const postController = {
     getAllPosts,
     getPostById,
-    createPost
+    createPost,
+    deletePost,
+    editPostContent
 }
 
 function getAllPosts() {
@@ -38,4 +41,7 @@ function createPost(post) {
 
 function savePosts() {
     fs.writeFileSync('data/posts.json', JSON.stringify(posts));
+}
+function saveReplies() {
+    fs.writeFileSync('data/replies.json', JSON.stringify(replies));
 }

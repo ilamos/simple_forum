@@ -6,38 +6,29 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {stdLog} from "../../helpers/debug/log_helper";
 import Link from "next/link";
+import { clientAPIhelper } from "../../helpers/client/api";
 
-function get_post_by_id(postid) {
-    return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/posts/get_post_by_id", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                post_id: postid
-            })
-        }).then((response) => {
-            console.log("Get post by ID status: " + response.status.toString());
-            if (response.status == 200) {
-                let response_prom = response.json();
-                response_prom.then((response_data) => {
-                    resolve(response_data);
-                });
-            } else {
-                reject(response.status);
-            }
-        });
-    });
-}
 
 export default function Post() {
     const router = useRouter();
+
     const [post, setPost] = useState({title: "", content: "", author: "", date: ""});
     const [userdata, setUserdata] = useState({});
+    const [is_author, setIsAuthor] = useState(false);
+
+    let attemptPostDelete = () => {
+        let response = clientAPIhelper.delete_post(post.id);
+        response.then((status) => {
+            if (status == 200) {
+                router.push("/");
+            } else {
+                stdLog.log("Failed to delete post!", "API");
+            }
+        });
+    }
 
     useEffect(() => {
-        const { postid } = router.query;
+        let { postid } = router.query;
         let data = {
             username: localStorage.getItem("user_name"),
             user_id: localStorage.getItem("user_id"),
@@ -45,9 +36,13 @@ export default function Post() {
             user_token: localStorage.getItem("user_token")
         }
         setUserdata(data);
-        let post_prom = get_post_by_id(postid);
+        let post_prom = clientAPIhelper.get_post_by_id(postid);
         post_prom.then((post_data) => {
             setPost(post_data);
+            if (post_data.author_id === data.user_id) {
+                stdLog.log("User is author of this post!", "POST");
+                setIsAuthor(true);
+            }
         }).catch((error) => {
             stdLog.logError("Failed to get post data: " + error, "Post page");
             setPost({title: "Post not found!", content: "Post not found!", author: "Post not found!", date: "Post not found!"});
@@ -62,6 +57,7 @@ export default function Post() {
             <h1>{post.title}</h1>
             <p className={styles.post_content} >{post.content}</p>
             <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
+            {is_author && <button onClick={ attemptPostDelete } className={`${styles.input_field} ${styles.input_button} ${styles.input_small_button}`} > Delete post </button> }
         </div>
         <div className={styles.post_footer}>
             <h3> <Link href="/">Go back</Link>  </h3>

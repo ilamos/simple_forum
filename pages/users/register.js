@@ -4,49 +4,10 @@ import Head from "next/head";
 import styles from '../../styles/Home.module.css'
 import { useRouter } from 'next/router';
 import {useEffect, useState} from "react";
+import { isAllowedChars, isIllegalName } from "../../helpers/dirs/names";
+import {clientAPIhelper} from "../../helpers/client/api";
 
-const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-function onlyAllowedChars(string) {
-    for (let i = 0; i < string.length; i++) {
-        if (!allowedChars.includes(string[i])) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function register_user(username, email, password) {
-    return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/users/create_user", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: username,
-                email: email,
-                password: password
-            })
-        }).then((response) => {
-            console.log("Create user status: " + response.status.toString());
-            if (response.status == 200) {
-                let response_prom = response.json();
-                response_prom.then((response_data) => {
-                    console.log("Create user status: " + response.status.toString());
-                    console.log("Response data: " + JSON.stringify(response_data));
-                    localStorage.setItem("user_name", response_data.username);
-                    localStorage.setItem("user_id", response_data.id);
-                    localStorage.setItem("user_email", response_data.email);
-                    localStorage.setItem("user_token", response_data.token);
-                    resolve(response.status);
-                });
-            } else {
-                reject(response.status);
-            }
-        });
-    });
-}
 
 
 export default function RegisterAccount() {
@@ -61,8 +22,18 @@ export default function RegisterAccount() {
         // console.log("Writing state: " + JSON.stringify(writing_state));
         writing_update(tmp_state);
 
-        if (!tmp_state.username || tmp_state.username.length < 2 || tmp_state.username.length > 20 || !onlyAllowedChars(tmp_state.username)) {
-            setError("Invalid username! (Min 2 chars, Max 20 chars, only letters and numbers)");
+        if (!tmp_state.username || tmp_state.username.length < 2 || tmp_state.username.length > 20) {
+            setError("Invalid username! (Min 2 chars, Max 20 chars");
+            return;
+        }
+
+        if (!isAllowedChars(tmp_state.username)) {
+            setError("Invalid username! (Only letters and numbers)");
+            return;
+        }
+
+        if ( isIllegalName(tmp_state.username) ) {
+            setError("Invalid username! (Name not allowed!)");
             return;
         }
         if (!tmp_state.email || tmp_state.email.length < 5 || tmp_state.email.length > 50 || !tmp_state.email.includes("@")) {
@@ -94,7 +65,7 @@ export default function RegisterAccount() {
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         if (error.length == 0 || error.includes("Failed to create user!")) {
-                            register_user(writing_state.username, writing_state.email, writing_state.password).then(
+                            clientAPIhelper.register_user(writing_state.username, writing_state.email, writing_state.password).then(
                                 (status) => {
                                     if (status == 200) {
                                         router.push("/");

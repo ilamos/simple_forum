@@ -1,8 +1,1 @@
-[
-  {
-    "id": "f20421db-6755-4495-9e65-bef36c56d2e8",
-    "username": "Quack",
-    "password": "$2a$07$hu89lIHBwlPPFGheM9qC4eK1JHydnYA.y2T1SCKo7hENoE19zsFZe",
-    "email": "quackhvh@yahoo.com"
-  }
-]
+[{"id":"f20421db-6755-4495-9e65-bef36c56d2e8","username":"Quack","password":"$2a$07$hu89lIHBwlPPFGheM9qC4eK1JHydnYA.y2T1SCKo7hENoE19zsFZe","email":"quackhvh@yahoo.com"},{"id":"4ffec056-a1f4-4b77-bee9-d122315729db","username":"An0nymous","password":"$2a$07$cD41xnnLvlWiBDGfgZmOROLNUrmN8XLh2t2ZXxsEy51xOHBsAiOYm","email":"anon@gmail.com"},{"id":"52bce5d3-10fe-4976-9705-3d5e1aad669e","username":"TestAccount","password":"$2a$07$jHkApwBEOpNX7Fj66jt1/u970ejWFpMuA0HWoVV.4qAN4wZGhS5Ba","email":"test@test.com"}]

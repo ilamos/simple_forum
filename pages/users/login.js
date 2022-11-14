@@ -4,38 +4,11 @@ import Head from "next/head";
 import styles from '../../styles/Home.module.css'
 import { useRouter } from 'next/router';
 import {useEffect, useState} from "react";
-
-function login_user(username, password) {
-    return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/users/login_user", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        }).then((response) => {
-            console.log("Login user status: " + response.status.toString());
-            if (response.status == 200) {
-                let response_prom = response.json();
-                response_prom.then((response_data) => {
-                    localStorage.setItem("user_name", response_data.username);
-                    localStorage.setItem("user_id", response_data.id);
-                    localStorage.setItem("user_email", response_data.email);
-                    localStorage.setItem("user_token", response_data.token);
-                    resolve(response.status);
-                });
-            } else {
-                reject(response.status);
-            }
-        });
-    });
-}
+import {clientAPIhelper} from "../../helpers/client/api";
 
 
-export default function RegisterAccount() {
+
+export default function LoginAccount() {
     const [writing_state, writing_update] = useState({username: "", password: "", password_confirm: "", email: ""});
     const [error, setError] = useState("");
     const router = useRouter();
@@ -64,7 +37,7 @@ export default function RegisterAccount() {
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         if (error.length == 0 || error.includes("Failed to log in.")) {
-                            login_user(writing_state.username, writing_state.password).then(
+                            clientAPIhelper.login_user(writing_state.username, writing_state.password).then(
                                 (status) => {
                                     if (status == 200) {
                                         router.push("/");

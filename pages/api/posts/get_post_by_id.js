@@ -6,6 +6,11 @@ export default function handler(req, res) {
         const { post_id } = req.body;
         stdLog.log("Post requested: " + post_id, "API");
 
+        if (post_id == undefined) {
+            res.status(400).json({message: "Invalid request!"});
+            return;
+        }
+
         // Return a response
         let response_data = postController.getPostById(post_id);
         if (response_data == undefined) {

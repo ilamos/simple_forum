@@ -13,7 +13,7 @@ export const userController = {
     loginUser,
     loginEmail,
     userNameExists,
-    checkAuth
+    verifyAndDecodeAuthToken
 }
 
 function userNameExists(username) {
@@ -50,7 +50,7 @@ function createAuthToken(user) {
     return token;
 }
 
-function checkAuth(token) {
+function verifyAndDecodeAuthToken(token) {
     try {
         const decoded = jwt.verify(token, serverRuntimeConfig.secret);
         return decoded.sub;

@@ -4,32 +4,7 @@ import Head from "next/head";
 import styles from '../../styles/Home.module.css'
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-
-function create_post(post_title, post_content) {
-    return new Promise((resolve, reject) => {
-        const auth_token = localStorage.getItem("user_token");
-        const response = fetch("http://localhost:3000/api/posts/create_post", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                auth: auth_token
-            },
-            body: JSON.stringify({
-                title: post_title,
-                content: post_content
-            })
-        }).then((response) => {
-            if (response.status == 200) {
-                console.log("Create post status: " + response.status.toString());
-                resolve(response.status);
-            } else {
-                reject(response.status);
-            }
-
-        });
-    });
-
-}
+import { clientAPIhelper } from "../../helpers/client/api";
 
 
 export default function CreatePost() {
@@ -83,14 +58,14 @@ export default function CreatePost() {
             <Image className={`${styles.post_image}`} src={"/images/13798.jpg"} alt={"Post image"} height={144} width={144}></Image>
             <h3>Think hard about what to include!</h3>
 
-            { !userdata.username && <h4>You are not logged in, your post will appear as Anonymous.</h4> }
+            { !userdata.username && <h4>You are not logged in, your post will appear as Anonymous. <br/> Please note that to edit or delete posts an account is needed.</h4> }
             { userdata.username && <h4>You will appear on the post as '{userdata.username}'.</h4> }
         </div>
             <div className={styles.form_container}>
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    if (error.length == 0) {
-                        create_post(e.target[0].value, e.target[1].value).then((response) => {
+                    if (error.length == 0 && writing_state.post_title.length > 0 && writing_state.post_content.length > 0) {
+                        clientAPIhelper.create_post(e.target[0].value, e.target[1].value).then((response) => {
                             console.log("Response: " + response);
                             router.push("/");
                         });
