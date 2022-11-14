@@ -32,23 +32,29 @@ export default function CreatePost() {
     const on_writing_event = (event) => {
         tmp_state = writing_state;
         tmp_state[event.target.name] = event.target.value;
+        writing_update(tmp_state);
+
+
         are_default = are_default_state;
         are_default[event.target.name] = false;
         are_default_update(are_default);
-        // console.log("Writing state: " + JSON.stringify(writing_state));
 
         if (tmp_state.post_content.length > 255 && !are_default_state.post_content) {
             setError("Too long post content! (MAX 255 CHARS)");
-        } else if (tmp_state.post_title.length > 30 && !are_default_state.post_title) {
-            setError("Too long post title! (MAX 30 CHARS)");
-        } else if ((tmp_state.post_title.length < 1 || tmp_state.post_content.length < 1) && !are_default_state.post_title && !are_default_state.post_content) {
-            setError("Please fill out all fields!");
-        } else {
-            setError("");
+            return;
         }
 
-        writing_update(tmp_state);
-        // console.log("Error: " + error);
+        if (tmp_state.post_title.length > 30 && !are_default_state.post_title) {
+            setError("Too long post title! (MAX 30 CHARS)");
+            return;
+        }
+
+        if ((tmp_state.post_title.length < 1 || tmp_state.post_content.length < 1) && !are_default_state.post_title && !are_default_state.post_content) {
+            setError("Please fill out all fields!");
+            return;
+        }
+
+        setError("");
     }
 
     return (
