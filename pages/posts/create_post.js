@@ -9,6 +9,11 @@ import { clientAPIhelper } from "../../helpers/client/api";
 
 export default function CreatePost() {
     const [writing_state, writing_update] = useState({post_title: "", post_content: ""});
+    let are_default = {
+        post_title: true,
+        post_content: true
+    }
+    const [are_default_state, are_default_update] = useState(are_default);
     const [error, setError] = useState("");
     const router = useRouter();
     let tmp_state = {post_title: "", post_content: ""};
@@ -24,26 +29,25 @@ export default function CreatePost() {
         setUserdata(data);
     }, []);
 
-    let on_writing_event = (event) => {
+    const on_writing_event = (event) => {
         tmp_state = writing_state;
         tmp_state[event.target.name] = event.target.value;
+        are_default = are_default_state;
+        are_default[event.target.name] = false;
+        are_default_update(are_default);
         // console.log("Writing state: " + JSON.stringify(writing_state));
-        writing_update(tmp_state);
-        if (tmp_state.post_title != undefined && tmp_state.post_content != undefined) {
-            if (tmp_state.post_title.length > 0 && tmp_state.post_content.length > 0) {
-                if (tmp_state.post_content.length > 255) {
-                    setError("Too long post content! (MAX 255 CHARS)");
-                } else if (tmp_state.post_title.length > 30) {
-                    setError("Too long post title! (MAX 30 CHARS)");
-                } else {
-                    setError("");
-                }
-            } else {
-                setError("Please fill out all fields!");
-            }
+
+        if (tmp_state.post_content.length > 255 && !are_default_state.post_content) {
+            setError("Too long post content! (MAX 255 CHARS)");
+        } else if (tmp_state.post_title.length > 30 && !are_default_state.post_title) {
+            setError("Too long post title! (MAX 30 CHARS)");
+        } else if ((tmp_state.post_title.length < 1 || tmp_state.post_content.length < 1) && !are_default_state.post_title && !are_default_state.post_content) {
+            setError("Please fill out all fields!");
         } else {
             setError("");
         }
+
+        writing_update(tmp_state);
         // console.log("Error: " + error);
     }
 

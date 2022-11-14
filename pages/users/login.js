@@ -36,7 +36,7 @@ export default function LoginAccount() {
                 <div className={styles.form_container}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
-                        if (error.length == 0 || error.includes("Failed to log in.")) {
+                        if (error.length == 0) {
                             clientAPIhelper.login_user(writing_state.username, writing_state.password).then(
                                 (status) => {
                                     if (status == 200) {

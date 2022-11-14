@@ -14,6 +14,14 @@ export default function RegisterAccount() {
     const [writing_state, writing_update] = useState({username: "", password: "", password_confirm: "", email: ""});
     const [error, setError] = useState("");
     const router = useRouter();
+    let are_default = {
+        username: true,
+        email: true,
+        password: true,
+        password_confirm: true
+    }
+    const [are_default_state, are_default_update] = useState(are_default);
+
     let tmp_state = {username: "", password: "", password_confirm: "", email: ""};
 
     let on_writing_event = (event) => {
@@ -21,30 +29,32 @@ export default function RegisterAccount() {
         tmp_state[event.target.name] = event.target.value;
         // console.log("Writing state: " + JSON.stringify(writing_state));
         writing_update(tmp_state);
-
-        if (!tmp_state.username || tmp_state.username.length < 2 || tmp_state.username.length > 20) {
+        are_default = are_default_state;
+        are_default[event.target.name] = false;
+        are_default_update(are_default);
+        if ((!tmp_state.username || tmp_state.username.length < 2 || tmp_state.username.length > 20) && !are_default_state.username) {
             setError("Invalid username! (Min 2 chars, Max 20 chars");
             return;
         }
 
-        if (!isAllowedChars(tmp_state.username)) {
+        if (!isAllowedChars(tmp_state.username) && !are_default_state.username) {
             setError("Invalid username! (Only letters and numbers)");
             return;
         }
 
-        if ( isIllegalName(tmp_state.username) ) {
+        if ( isIllegalName(tmp_state.username) && !are_default_state.username ) {
             setError("Invalid username! (Name not allowed!)");
             return;
         }
-        if (!tmp_state.email || tmp_state.email.length < 5 || tmp_state.email.length > 50 || !tmp_state.email.includes("@")) {
-            setError("Invalid email! (Min 5 chars, Max 50 chars)");
+        if ((!tmp_state.email || tmp_state.email.length < 3 || tmp_state.email.length > 50 || !tmp_state.email.includes("@")) && !are_default_state.email) {
+            setError("Invalid email! (Min 3 chars, Max 50 chars)");
             return;
         }
-        if (!tmp_state.password || tmp_state.password.length < 5 || tmp_state.password.length > 50) {
+        if ((!tmp_state.password || tmp_state.password.length < 5 || tmp_state.password.length > 50) && !are_default_state.password) {
             setError("Invalid password! (Min 5 chars, Max 50 chars)");
             return;
         }
-        if (!(tmp_state.password_confirm == tmp_state.password)) {
+        if (!(tmp_state.password_confirm == tmp_state.password) && !are_default_state.password_confirm) {
             setError("Passwords do not match!");
             return;
         }
