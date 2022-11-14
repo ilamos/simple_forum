@@ -75,7 +75,7 @@ export default function RegisterAccount() {
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         if (error.length == 0 || error.includes("Failed to create user!")) {
-                            clientAPIhelper.register_user(writing_state.username, writing_state.email, writing_state.password).then(
+                            clientAPIhelper.RegisterUser(writing_state.username, writing_state.email, writing_state.password).then(
                                 (status) => {
                                     if (status == 200) {
                                         router.push("/");

@@ -26,7 +26,7 @@ export default function Home() {
 
 
     useEffect(() => {
-        clientAPIhelper.get_all_posts().then(x => { setPosts(x.reverse()); });
+        clientAPIhelper.GetAllPosts().then(x => { setPosts(x.reverse()); });
     }, []);
 
     return (

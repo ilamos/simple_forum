@@ -75,7 +75,7 @@ export default function CreatePost() {
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     if (error.length == 0 && writing_state.post_title.length > 0 && writing_state.post_content.length > 0) {
-                        clientAPIhelper.create_post(e.target[0].value, e.target[1].value).then((response) => {
+                        clientAPIhelper.CreatePost(e.target[0].value, e.target[1].value).then((response) => {
                             console.log("Response: " + response);
                             router.push("/");
                         });

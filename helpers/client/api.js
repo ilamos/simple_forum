@@ -1,15 +1,15 @@
 import { stdLog } from "../debug/log_helper";
 
 export const clientAPIhelper = {
-    get_all_posts,
-    get_post_by_id,
-    create_post,
-    delete_post,
-    login_user,
-    register_user
+    GetAllPosts,
+    GetPostByID,
+    CreatePost,
+    DeletePost,
+    LoginUser,
+    RegisterUser
 }
 
-function get_all_posts(post_title, post_content) {
+function GetAllPosts(post_title, post_content) {
     return new Promise((resolve, reject) => {
         const response = fetch("http://localhost:3000/api/posts/get_all_posts", {
             method: "GET",
@@ -32,7 +32,7 @@ function get_all_posts(post_title, post_content) {
     });
 }
 
-function get_post_by_id(postid) {
+function GetPostByID(postid) {
     return new Promise((resolve, reject) => {
         const response = fetch("http://localhost:3000/api/posts/get_post_by_id", {
             method: "POST",
@@ -56,7 +56,7 @@ function get_post_by_id(postid) {
     });
 }
 
-function create_post(post_title, post_content) {
+function CreatePost(post_title, post_content) {
     return new Promise((resolve, reject) => {
         const auth_token = localStorage.getItem("user_token");
         const response = fetch("http://localhost:3000/api/posts/create_post", {
@@ -81,7 +81,7 @@ function create_post(post_title, post_content) {
     });
 }
 
-function delete_post(postid) {
+function DeletePost(postid) {
     return new Promise((resolve, reject) => {
         const auth_token = localStorage.getItem("user_token");
         if (auth_token == null) {
@@ -107,7 +107,7 @@ function delete_post(postid) {
     });
 }
 
-function login_user(username, password) {
+function LoginUser(username, password) {
     return new Promise((resolve, reject) => {
         const response = fetch("http://localhost:3000/api/users/login_user", {
             method: "POST",
@@ -136,7 +136,7 @@ function login_user(username, password) {
     });
 }
 
-function register_user(username, email, password) {
+function RegisterUser(username, email, password) {
     return new Promise((resolve, reject) => {
         const response = fetch("http://localhost:3000/api/users/create_user", {
             method: "POST",

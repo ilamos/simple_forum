@@ -37,7 +37,7 @@ export default function LoginAccount() {
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         if (error.length == 0) {
-                            clientAPIhelper.login_user(writing_state.username, writing_state.password).then(
+                            clientAPIhelper.LoginUser(writing_state.username, writing_state.password).then(
                                 (status) => {
                                     if (status == 200) {
                                         router.push("/");

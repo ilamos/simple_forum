@@ -17,7 +17,7 @@ export default function Post() {
     const [is_author, setIsAuthor] = useState(false);
 
     let attemptPostDelete = () => {
-        let response = clientAPIhelper.delete_post(post.id);
+        let response = clientAPIhelper.DeletePost(post.id);
         response.then((status) => {
             if (status == 200) {
                 router.push("/");
@@ -39,7 +39,7 @@ export default function Post() {
             user_token: localStorage.getItem("user_token")
         }
         setUserdata(data);
-        let post_prom = clientAPIhelper.get_post_by_id(postid);
+        let post_prom = clientAPIhelper.GetPostByID(postid);
         post_prom.then((post_data) => {
             setPost(post_data);
             if (post_data.author_id === data.user_id) {
