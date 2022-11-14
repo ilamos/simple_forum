@@ -27,7 +27,10 @@ export default function Post() {
         });
     }
 
+
+
     useEffect(() => {
+
         let { postid } = router.query;
         let data = {
             username: localStorage.getItem("user_name"),
@@ -47,7 +50,7 @@ export default function Post() {
             stdLog.logError("Failed to get post data: " + error, "Post page");
             setPost({title: "Post not found!", content: "Post not found!", author: "Post not found!", date: "Post not found!"});
         });
-    }, []);
+    }, [router.isReady]);
     return (
     <>
         <Head>
