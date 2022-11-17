@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import {useEffect, useState} from "react";
 import {clientAPIhelper} from "../helpers/client/api";
-
+import Post from "../components/post";
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -53,11 +53,7 @@ export default function Home() {
               </div>
 
               {posts && posts.map(post =>
-                    <div key={post.id} className={styles.post_main}>
-                        <Link href={`posts/${post.id}`}><h1>{post.title}</h1></Link>
-                        <p dangerouslySetInnerHTML={{__html: post.content}}></p>
-                        <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
-                    </div>
+                    <Post key={post.id} post={post} isLink={true}/>
               )}
           </div>
         </div>

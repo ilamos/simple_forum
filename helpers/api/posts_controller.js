@@ -25,15 +25,22 @@ function deletePost(id) {
     savePosts();
 }
 
-function editPostContent(id, content) {
+function editPostContent(id, new_content) {
     let post = getPostById(id);
-    post.content = content;
+    post.edit_history.push({
+        old_content: post.content,
+        new_content: new_content,
+        time: new Date(new Date().toUTCString())
+    });
+    post.content = new_content;
+    post.last_edited = new Date(new Date().toUTCString());
     savePosts();
 }
 
 function createPost(post) {
     post.id = uuidv4();
     post.time = new Date(new Date().toUTCString());
+    post.edit_history = [];
     posts.push(post);
     savePosts();
     return post.id;

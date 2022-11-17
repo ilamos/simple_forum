@@ -79,7 +79,7 @@ function registerUser(username, password, email) {
 
 function loginUser(username, password) {
     let user = users.find(user => user.username == username);
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user && bcrypt.compareSync(password, user.password) === true) {
         return {
             id: user.id,
             username: user.username,

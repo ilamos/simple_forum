@@ -7,15 +7,22 @@ import {NIL as NIL_UUID} from "uuid";
 
 export default function handler(req, res) {
     if (req.method === "POST") {
-        const { post_id } = req.body;
+        const { post_id, content } = req.body;
+
         const auth_token = req.headers.auth;
+
         let author_id = NIL_UUID;
 
-        stdLog.log("Post deletion requested: " + post_id, "API");
+        if (content === undefined || content == null || content === "" || post_id === undefined || post_id === "" || content.length > 255) {
+            res.status(400).json({message: "Invalid request!"});
+            return;
+        }
+
+        stdLog.log("Post content edit requested: " + post_id, "API");
 
         let post_data = postController.getPostById(post_id);
 
-        if (post_data === undefined) {
+        if (post_data == undefined) {
             res.status(404).json({message: "Post not found!"});
         }
 
@@ -41,11 +48,11 @@ export default function handler(req, res) {
         }
 
 
-        // Delete post
-        postController.deletePost(post_id);
+        // Edit post content
+        postController.editPostContent(post_id, content);
 
         // Respond with json data
-        res.status(200).json("Post deleted successfully!");
+        res.status(200).json("Post edited successfully!");
     } else {
         res.status(400).json({message: "Invalid request!"});
     }

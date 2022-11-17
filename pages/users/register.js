@@ -24,7 +24,7 @@ export default function RegisterAccount() {
 
     let tmp_state = {username: "", password: "", password_confirm: "", email: ""};
 
-    let on_writing_event = (event) => {
+    let onWritingEvent = (event) => {
         tmp_state = writing_state;
         tmp_state[event.target.name] = event.target.value;
         // console.log("Writing state: " + JSON.stringify(writing_state));
@@ -87,13 +87,13 @@ export default function RegisterAccount() {
                     } }>
                         { error && error.length > 0 && <p className={styles.error}>{error}</p> }
                         <label className={styles.input_label} htmlFor="username">Username (Unique)</label> <br></br>
-                        <input className={styles.input_field} type="text" name="username" id="username" onChange={on_writing_event}></input> <br></br>
+                        <input className={styles.input_field} type="text" name="username" id="username" onChange={onWritingEvent}></input> <br></br>
                         <label className={styles.input_label} htmlFor="email">Email (Optional)</label> <br></br>
-                        <input className={styles.input_field} type="email" name="email" id="email" onChange={on_writing_event}></input> <br></br>
+                        <input className={styles.input_field} type="email" name="email" id="email" onChange={onWritingEvent}></input> <br></br>
                         <label className={styles.input_label} htmlFor="password">Password</label> <br></br>
-                        <input className={styles.input_field} type="password" name="password" id="password" onChange={on_writing_event}></input> <br></br>
+                        <input className={styles.input_field} type="password" name="password" id="password" onChange={onWritingEvent}></input> <br></br>
                         <label className={styles.input_label} htlmFor="password_confirm">Confirm Password</label> <br></br>
-                        <input className={styles.input_field} type="password" name="password_confirm" id="password_confirm" onChange={on_writing_event}></input> <br></br>
+                        <input className={styles.input_field} type="password" name="password_confirm" id="password_confirm" onChange={onWritingEvent}></input> <br></br>
                         <input className={`${styles.input_field} ${styles.input_button}`} type="submit" value="Register"></input>
                     </form>
                 </div>

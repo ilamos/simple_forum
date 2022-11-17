@@ -7,9 +7,10 @@ import {useRouter} from "next/router";
 import {stdLog} from "../../helpers/debug/log_helper";
 import Link from "next/link";
 import { clientAPIhelper } from "../../helpers/client/api";
+import Post from "../../components/post";
 
 
-export default function Post() {
+export default function PostByID() {
     const router = useRouter();
 
     const [post, setPost] = useState({title: "", content: "", author: "", date: ""});
@@ -25,6 +26,11 @@ export default function Post() {
                 stdLog.log("Failed to delete post!", "API");
             }
         });
+    }
+
+
+    let redirToEdit = () => {
+        router.push("/posts/edit/" + post.id);
     }
 
 
@@ -56,12 +62,7 @@ export default function Post() {
         <Head>
             <title>{post.title}</title>
         </Head>
-        <div key={post.id} className={styles.post_main}>
-            <h1>{post.title}</h1>
-            <p className={styles.post_content} >{post.content}</p>
-            <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
-            {is_author && <button onClick={ attemptPostDelete } className={`${styles.input_field} ${styles.input_button} ${styles.input_small_button}`} > Delete post </button> }
-        </div>
+        <Post post={post} is_author={is_author} onEdit={redirToEdit} onDelete={attemptPostDelete}/>
         <div className={styles.post_footer}>
             <h3> <Link href="/">Go back</Link>  </h3>
         </div>

@@ -85,7 +85,7 @@ export default function CreatePost() {
                     <label htmlFor="post_title">Post Title</label> <br></br>
                     <input className={styles.input_field} onChange={on_writing_event} type="text" id="post_title" name="post_title"></input> <br></br>
                     <label htmlFor="post_content">Post Content</label> <br></br>
-                    <textarea className={`${styles.input_field} ${styles.text_area}`} onChange={on_writing_event} type="text" id="post_content" name="post_content"></textarea> <br></br>
+                    <textarea className={`${styles.input_field} ${styles.text_area}`} onChange={on_writing_event} type="text" id="post_content" name="post_content"></textarea> <br/>
                     <input className={`${styles.input_field} ${styles.input_button}`} type="submit" value="Create post"></input>
                 </form>
             </div>

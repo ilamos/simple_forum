@@ -4,6 +4,7 @@ export const clientAPIhelper = {
     GetAllPosts,
     GetPostByID,
     CreatePost,
+    EditPostContent,
     DeletePost,
     LoginUser,
     RegisterUser
@@ -49,6 +50,33 @@ function GetPostByID(postid) {
                 response_prom.then((response_data) => {
                     resolve(response_data);
                 });
+            } else {
+                reject(response.status);
+            }
+        });
+    });
+}
+
+function EditPostContent(postid, post_content) {
+    return new Promise((resolve, reject) => {
+        const auth_token = localStorage.getItem("user_token");
+        if (auth_token == null) {
+            reject(401);
+        }
+        const response = fetch("http://localhost:3000/api/posts/edit_post_content", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                auth: auth_token
+            },
+            body: JSON.stringify({
+                post_id: postid,
+                content: post_content
+            })
+        }).then((response) => {
+            if (response.status == 200) {
+                stdLog.log("Edit post content status: " + response.status.toString());
+                resolve(response.status);
             } else {
                 reject(response.status);
             }
