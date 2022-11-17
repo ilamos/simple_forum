@@ -8,3 +8,4 @@ The secret is used to sign the JWT token and should be changed in case you want 
 
 - Registration and login
 - Create posts while logged in or not ("Anonymous" posts)
+- Editing and deletion of posts by Author of post
