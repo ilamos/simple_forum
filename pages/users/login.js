@@ -59,7 +59,7 @@ export default function LoginAccount() {
                     </form>
                 </div>
             </div>
-            <div className={styles.post_footer}>
+            <div className={styles.post_below}>
                 <h3> <Link href="/">Go back</Link>  </h3>
             </div>
 

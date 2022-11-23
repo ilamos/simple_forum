@@ -63,7 +63,7 @@ export default function PostByID() {
             <title>{post.title}</title>
         </Head>
         <Post post={post} is_author={is_author} onEdit={redirToEdit} onDelete={attemptPostDelete}/>
-        <div className={styles.post_footer}>
+        <div className={styles.post_below}>
             <h3> <Link href="/">Go back</Link>  </h3>
         </div>
     </>

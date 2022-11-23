@@ -1,5 +1,6 @@
 import styles from '../styles/Home.module.css'
 import Link from "next/link";
+import Icon from "./icon.js";
 
 export default function Post({post, is_author, onDelete, onEdit, isLink}) {
     return (
@@ -7,10 +8,18 @@ export default function Post({post, is_author, onDelete, onEdit, isLink}) {
             {isLink && <Link href={`posts/${post.id}`}> <h1>{post.title}</h1> </Link>}
             {!isLink && <h1>{post.title}</h1>}
             <p dangerouslySetInnerHTML={{__html: post.content}}></p>
-            <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
-            {post.last_edited && <p className={styles.post_footer_text}>Last edited at: {new Date(post.last_edited).toLocaleString()}</p>}
-            {is_author && onDelete &&<button onClick={ onDelete } className={`${styles.input_field} ${styles.input_button} ${styles.input_small_button}`} > Delete post </button> }
-            {is_author && onEdit && <button onClick={ onEdit } className={`${styles.input_field} ${styles.input_button} ${styles.input_small_button}`} > Edit post </button> }
+            <div className={styles.post_footer}>
+                <div name={"post-footer-text-container"}>
+                    <p className={styles.post_footer_text}>Author: {post.author} - Created at: {new Date(post.time).toLocaleString()}</p>
+                    {post.last_edited && <p className={styles.post_footer_text}>Last edited at: {new Date(post.last_edited).toLocaleString()}</p>}
+                </div>
+
+                <div className={styles.post_icon_container}>
+                    {is_author && onDelete &&<div onClick={ onDelete } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={"medium"} inverted={true} source={"/images/icons/trash.svg"}/> </div> }
+                    {is_author && onEdit && <div onClick={ onEdit } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={"medium"} inverted={true} source={"/images/icons/pen_paper.svg"}/> </div> }
+                </div>
+
+            </div>
         </div>
     )
 }

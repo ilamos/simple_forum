@@ -76,9 +76,9 @@ export default function PostEdit() {
                 <h1>{post.title}</h1>
                 { error && error.length > 0 && <p className={styles.error}>{error}</p> }
                 <textarea onChange={onContentUpdate} className={`${styles.input_field} ${styles.text_area}`} >{post.content}</textarea> <br/>
-                {is_author && <button onClick={ attemptPostSave } className={`${styles.input_field} ${styles.input_button} ${styles.input_small_button}`} > Save post </button> }
+                {is_author && <button onClick={ attemptPostSave } className={`${styles.input_field} ${styles.input_button} ${styles.input_small_button}`} > Save! </button> }
             </div>
-            <div className={styles.post_footer}>
+            <div className={styles.post_below}>
                 <h3> <Link href={`/posts/${post.id}`}>Back to post</Link>  </h3>
             </div>
         </>
