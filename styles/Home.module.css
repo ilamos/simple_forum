@@ -129,10 +129,10 @@
 }
 
 .icon {
-
+    vertical-align: text-bottom;
 }
 
-.icon_inverted {
+.image_inverted {
     filter: invert(100%);
 }
 
@@ -140,8 +140,6 @@
     cursor: pointer;
 }
 
-
-/* Post icons should be on the same row as the footer text */
 .post_footer_text {
     color: #919191;
 }
@@ -152,6 +150,13 @@
     padding-right: 5px;
     margin-left: 5px;
     margin-right: 5px;
+    position: relative;
+    width: 10%;
+}
+
+.post_icon {
+    position: absolute;
+    bottom: 0;
 }
 
 .post_icon_container {

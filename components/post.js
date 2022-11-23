@@ -1,6 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Link from "next/link";
 import Icon from "./icon.js";
+import { icon_library } from "./icon.js";
 
 export default function Post({post, is_author, onDelete, onEdit, isLink}) {
     return (
@@ -15,8 +16,8 @@ export default function Post({post, is_author, onDelete, onEdit, isLink}) {
                 </div>
 
                 <div className={styles.post_icon_container}>
-                    {is_author && onDelete &&<div onClick={ onDelete } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={20} inverted={true} name={"trash"}/> </div> }
-                    {is_author && onEdit && <div onClick={ onEdit } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={20} inverted={true} name={"pen_paper"}/> </div> }
+                    {is_author && onDelete &&<div onClick={ onDelete } className={`${styles.clickable} ${styles.post_icon_link}`} > <p className={styles.post_icon}> <Icon size={20} inverted={true} icon={icon_library.TrashBin}/> </p> </div> }
+                    {is_author && onEdit && <div onClick={ onEdit } className={`${styles.clickable} ${styles.post_icon_link}`} > <p className={styles.post_icon}> <Icon size={20} inverted={true} icon={icon_library.PenPaper}/> </p> </div> }
                 </div>
 
             </div>
