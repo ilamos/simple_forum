@@ -70,7 +70,7 @@ export default function PostEdit() {
     return (
         <>
             <Head>
-                <title>{post.title}</title>
+                <title>Editing: {post.title}</title>
             </Head>
             <div key={post.id} className={styles.post_main}>
                 <h1>{post.title}</h1>
