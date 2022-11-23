@@ -8,7 +8,7 @@ const size_defs = {
     large: 30,
 }
 
-export default function Icon({source, size, inverted}) {
+export default function Icon({name, size, inverted}) {
     const [class_name, class_name_update] = useState(styles.icon);
     useEffect(() => {
         if (inverted) {
@@ -18,7 +18,7 @@ export default function Icon({source, size, inverted}) {
 
     return (
         <>
-            <Image className={class_name} src={source} alt={source} width={size_defs[size]} height={size_defs[size]} />
+            <Image className={class_name} src={`/images/icons/${name}.svg`} alt={`Icon: ${name}`} width={size_defs[size]} height={size_defs[size]} />
         </>
     )
 }

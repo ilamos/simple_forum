@@ -15,8 +15,8 @@ export default function Post({post, is_author, onDelete, onEdit, isLink}) {
                 </div>
 
                 <div className={styles.post_icon_container}>
-                    {is_author && onDelete &&<div onClick={ onDelete } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={"medium"} inverted={true} source={"/images/icons/trash.svg"}/> </div> }
-                    {is_author && onEdit && <div onClick={ onEdit } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={"medium"} inverted={true} source={"/images/icons/pen_paper.svg"}/> </div> }
+                    {is_author && onDelete &&<div onClick={ onDelete } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={"medium"} inverted={true} name={"trash"}/> </div> }
+                    {is_author && onEdit && <div onClick={ onEdit } className={`${styles.clickable} ${styles.post_icon_link}`} > <Icon size={"medium"} inverted={true} name={"pen_paper"}/> </div> }
                 </div>
 
             </div>
