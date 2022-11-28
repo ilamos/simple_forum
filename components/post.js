@@ -5,7 +5,7 @@ import { icon_library } from "./icon.js";
 
 export default function Post({post, is_author, onDelete, onEdit, isLink}) {
     return (
-        <div key={post.id} className={styles.post_main}>
+        <div key={post.id} className={`${styles.fade_in_05} ${styles.post_main}`}>
             {isLink && <Link href={`posts/${post.id}`}> <h1>{post.title}</h1> </Link>}
             {!isLink && <h1>{post.title}</h1>}
             <p dangerouslySetInnerHTML={{__html: post.content}}></p>

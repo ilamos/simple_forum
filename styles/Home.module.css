@@ -1,3 +1,8 @@
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .post_main {
     max-width: 800px;
     border-radius: 5px;
@@ -51,6 +56,10 @@
     background-color: transparent;
     border: white 1px solid;
     padding: 10px 1rem;
+}
+
+.fade_in_05 {
+    animation: fadeIn 0.5s;
 }
 
 .post_container_title {
