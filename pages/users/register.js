@@ -88,7 +88,7 @@ export default function RegisterAccount() {
                         { error && error.length > 0 && <p className={styles.error}>{error}</p> }
                         <label className={styles.input_label} htmlFor="username">Username (Unique)</label> <br></br>
                         <input className={styles.input_field} type="text" name="username" id="username" onChange={onWritingEvent}></input> <br></br>
-                        <label className={styles.input_label} htmlFor="email">Email (Optional)</label> <br></br>
+                        <label className={styles.input_label} htmlFor="email">Email</label> <br></br>
                         <input className={styles.input_field} type="email" name="email" id="email" onChange={onWritingEvent}></input> <br></br>
                         <label className={styles.input_label} htmlFor="password">Password</label> <br></br>
                         <input className={styles.input_field} type="password" name="password" id="password" onChange={onWritingEvent}></input> <br></br>

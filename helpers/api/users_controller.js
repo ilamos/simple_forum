@@ -46,18 +46,27 @@ function getUserById(id) {
 }
 
 function createAuthToken(user) {
-    const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {});
+    const token = jwt.sign({ sub: user.id, tid: user.token_id }, serverRuntimeConfig.secret, {});
     return token;
 }
 
 function verifyAndDecodeAuthToken(token) {
     try {
         const decoded = jwt.verify(token, serverRuntimeConfig.secret);
-        return decoded.sub;
+        let token_id = decoded.tid;
+        let user = getUserById(decoded.sub);
+        let user_current_token_id = user.token_id;
+        if (token_id === user_current_token_id) {
+            return decoded.sub;
+        } else {
+            return false;
+        }
     } catch (err) {
         return false;
     }
 }
+
+
 
 function registerUser(username, password, email) {
     password = bcrypt.hashSync(password, serverRuntimeConfig.bcrypt_salt);
@@ -65,6 +74,7 @@ function registerUser(username, password, email) {
         id: uuidv4(),
         username: username,
         password: password,
+        token_id: uuidv4(),
         email: email
     }
     users.push(user);
@@ -101,6 +111,14 @@ function loginEmail(email, password) {
         };
     }
     return false;
+}
+
+function changePassword(id, new_password) {
+    let user = getUserById(id);
+    user.password = bcrypt.hashSync(new_password, serverRuntimeConfig.bcrypt_salt);
+    user.token_id = uuidv4();
+    saveUsers();
+    return createAuthToken(user);
 }
 
 function saveUsers() {
