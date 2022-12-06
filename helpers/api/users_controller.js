@@ -5,6 +5,7 @@ let users = require('../../data/users.json');
 import getConfig from 'next/config';
 import { v4 as uuidv4 } from 'uuid';
 const { serverRuntimeConfig } = getConfig();
+import logToFile from "./log";
 
 export const userController = {
     getAllUsers,

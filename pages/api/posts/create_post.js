@@ -4,7 +4,7 @@ import { stdLog } from "../../../helpers/debug/log_helper";
 import { NIL as NIL_UUID } from "uuid";
 
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
     if (req.method == "POST") {
         // Handle create post requests
         const {title, content} = req.body;
@@ -15,7 +15,7 @@ export default function handler(req, res) {
 
         if (auth_token) {
             author_id = userController.verifyAndDecodeAuthToken(auth_token);
-            if (author_id != undefined && author_id != NIL_UUID && author_id != null && typeof author_id == "string") {
+            if (author_id !== undefined && author_id !== NIL_UUID && author_id != null && typeof author_id == "string") {
                 stdLog.log("Author ID: " + author_id, "API");
                 author_name = userController.getUserById(author_id).username;
             }
@@ -31,15 +31,12 @@ export default function handler(req, res) {
         let stripped_content = content.replace(/(<([^>]+)>)/gi, "");
 
         // Create a new post object
-        let new_post = {
-            title: title,
-            content: stripped_content.replace(/\r?\n/g, "<br/>"), // Fixes newlines
-            author: author_name,
-            author_id: author_id
-        }
+
+        stripped_content = stripped_content.replace(/\r?\n/g, "<br/>") // Fixes newlines
+
 
         // Add the new post to the posts array
-        postController.createPost(new_post);
+        await postController.createPost(title, stripped_content, author_name, author_id)
         res.status(200).json({message: "Post created successfully!"});
     } else {
         res.status(400).json({message: "Invalid request!"});

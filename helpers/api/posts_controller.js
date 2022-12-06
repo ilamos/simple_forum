@@ -1,8 +1,33 @@
+import {v4 as uuidv4} from 'uuid';
+import prisma from "../db/prisma";
+import {stdLog} from "../debug/log_helper";
+import logToFile from "./log";
 
-import { v4 as uuidv4 } from 'uuid';
-const fs = require('fs');
-let posts = require('../../data/posts.json');
-let replies = require('../../data/replies.json');
+
+/* Prisma definitions */
+/*
+
+model Post  {
+    id String @id @unique
+    title String
+    content String
+    author String
+    author_id String
+    time String
+    edit_history EditHistory[]
+    last_edited DateTime?
+}
+
+model EditHistory {
+    id String @id @unique
+    old_content String
+    new_content String
+    time String
+    post_id String
+    post Post @relation(fields: [post_id], references: [id])
+}
+
+ */
 
 export const postController = {
     getAllPosts,
@@ -12,43 +37,69 @@ export const postController = {
     editPostContent
 }
 
-function getAllPosts() {
-    return posts;
-}
-
-function getPostById(id) {
-    return posts.find(post => post.id == id);
-}
-
-function deletePost(id) {
-    posts = posts.filter(post => post.id != id);
-    savePosts();
-}
-
-function editPostContent(id, new_content) {
-    let post = getPostById(id);
-    post.edit_history.push({
-        old_content: post.content,
-        new_content: new_content,
-        time: new Date(new Date().toUTCString())
+async function getAllPosts() {
+    return await prisma.post.findMany().catch((err) => {
+        stdLog.logError(err);
     });
-    post.content = new_content;
-    post.last_edited = new Date(new Date().toUTCString());
-    savePosts();
 }
 
-function createPost(post) {
-    post.id = uuidv4();
-    post.time = new Date(new Date().toUTCString());
-    post.edit_history = [];
-    posts.push(post);
-    savePosts();
-    return post.id;
+async function getPostById(id) {
+    return await prisma.post.findUnique({
+        where: {
+            id: id
+        }
+    }).catch((err) => {
+        stdLog.logError(err);
+    });
 }
 
-function savePosts() {
-    fs.writeFileSync('data/posts.json', JSON.stringify(posts));
+async function deletePost(id) {
+    await prisma.post.delete({
+        where: {
+            id: id
+        }
+    });
 }
-function saveReplies() {
-    fs.writeFileSync('data/replies.json', JSON.stringify(replies));
+
+async function editPostContent(id, new_content) {
+    let post = await prisma.post.findUnique({
+        where: {
+            id: id
+        }
+    });
+
+    await prisma.editHistory.create({
+        data: {
+            old_content: post.content,
+            new_content: new_content,
+            time: new Date(new Date().toUTCString()),
+            post: { connect: { id: id } },
+            id: id,
+        },
+    });
+
+    await prisma.post.update({
+        where: {
+            id: id
+        },
+        data: {
+            content: new_content,
+        }
+    });
+}
+
+async function createPost(title, content, author, author_id) {
+    await prisma.post.create({
+        data: {
+            id: uuidv4(),
+            title: title,
+            content: content,
+            author: author,
+            author_id: author_id,
+            time: new Date(new Date().toUTCString()),
+            edit_history: { create: [] },
+        }
+    }).catch((err) => {
+        stdLog.logError(err);
+    });
 }

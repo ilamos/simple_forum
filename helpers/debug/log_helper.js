@@ -1,11 +1,15 @@
 
+
 export const stdLog = {
     log,
     logError,
     logWarning
 }
 
+const ENABLE_LOGGING = true;
+
 function log(message, prefix) {
+    if (!ENABLE_LOGGING) { return; }
     if (prefix) {
         console.log(`[${prefix}]  ${message}`);
     } else {
@@ -14,6 +18,7 @@ function log(message, prefix) {
 }
 
 function logError(message, prefix) {
+    if (!ENABLE_LOGGING) { return; }
     if (prefix) {
         console.error(`[${prefix}]  ${message}`);
     } else {
@@ -22,10 +27,14 @@ function logError(message, prefix) {
 }
 
 function logWarning(message, prefix) {
+    if (!ENABLE_LOGGING) { return; }
     if (prefix) {
         console.warn(`[${prefix}]  ${message}`);
     } else {
         console.warn(`[WARNING]  ${message}`);
     }
 }
+
+
+
 
