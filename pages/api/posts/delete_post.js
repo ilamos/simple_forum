@@ -1,11 +1,11 @@
-// Delete post by ID API endpoint
+// noinspection JSUnusedGlobalSymbols
 
 import { postController } from "../../../helpers/api/posts_controller";
 import {stdLog} from "../../../helpers/debug/log_helper";
 import {userController} from "../../../helpers/api/users_controller";
 import {NIL as NIL_UUID} from "uuid";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
     if (req.method === "POST") {
         const { post_id } = req.body;
         const auth_token = req.headers.auth;
@@ -13,14 +13,14 @@ export default function handler(req, res) {
 
         stdLog.log("Post deletion requested: " + post_id, "API");
 
-        let post_data = postController.getPostById(post_id);
+        let post_data = await postController.getPostById(post_id);
 
         if (post_data === undefined) {
             res.status(404).json({message: "Post not found!"});
         }
 
         if (auth_token) {
-            author_id = userController.verifyAndDecodeAuthToken(auth_token);
+            author_id = await userController.verifyAndDecodeAuthToken(auth_token);
             if (author_id !== undefined && author_id !== NIL_UUID && author_id != null && typeof author_id == "string") {
                 stdLog.log("Author ID: " + author_id, "API");
                 if (post_data.author_id !== author_id) {
@@ -42,7 +42,7 @@ export default function handler(req, res) {
 
 
         // Delete post
-        postController.deletePost(post_id);
+        await postController.deletePost(post_id);
 
         // Respond with json data
         res.status(200).json("Post deleted successfully!");

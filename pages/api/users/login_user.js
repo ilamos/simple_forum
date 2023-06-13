@@ -1,8 +1,8 @@
 import { userController } from "../../../helpers/api/users_controller";
 import {stdLog} from "../../../helpers/debug/log_helper";
 
-export default function handler(req, res) {
-    if (req.method == "POST") {
+export default async function handler(req, res) {
+    if (req.method === "POST") {
         // Handle login requests
         const { username, password } = req.body;
 
@@ -16,11 +16,11 @@ export default function handler(req, res) {
         let user_data;
 
         if (username.includes("@")) {
-            user_data = userController.loginEmail(username, password);
+            user_data = await userController.loginEmail(username, password);
         } else {
-            user_data = userController.loginUser(username, password);
+            user_data = await userController.loginUser(username, password);
         }
-
+        stdLog.log("User data: " + JSON.stringify(user_data), "API");
         if (user_data) {
             res.status(200).json(user_data);
         } else {

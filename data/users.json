@@ -1,9 +1,1 @@
-[
-  {
-    "id": "19caebe0-aec8-4094-8cb2-12fc4bddc56c",
-    "username": "Quack",
-    "password": "$2a$07$cE5Zw8cp5tnuvFV7z53pbODnragICxqRHfemoDlE3YrB8/M4DUbwW",
-    "token_id": "22afa7ae-7326-4df5-a859-48bca9dc0f55",
-    "email": "quack@quack.com"
-  }
-]
+[ "!! This file is no longer in use, replaced by Prisma with SQLite !!" ]

@@ -54,11 +54,24 @@ async function getPostById(id) {
 }
 
 async function deletePost(id) {
+    // First we must delete all edit history entries for this post
+    // Otherwise we will get a foreign key constraint error
+    await prisma.editHistory.deleteMany({
+        where: {
+            post_id: id
+        }
+    }).catch((err) => {
+        stdLog.logError(err, "HIST_DELETE_ERROR");
+    });
+
     await prisma.post.delete({
         where: {
             id: id
         }
+    }).catch((err) => {
+        stdLog.logError(err, "POST_DELETE_ERROR");
     });
+    logToFile(`Post deleted [Post ID: ${id}]`);
 }
 
 async function editPostContent(id, new_content) {
@@ -89,9 +102,11 @@ async function editPostContent(id, new_content) {
 }
 
 async function createPost(title, content, author, author_id) {
+    stdLog.log("Author: " + author)
+    let post_id = uuidv4();
     await prisma.post.create({
         data: {
-            id: uuidv4(),
+            id: post_id,
             title: title,
             content: content,
             author: author,
@@ -102,4 +117,5 @@ async function createPost(title, content, author, author_id) {
     }).catch((err) => {
         stdLog.logError(err);
     });
+    logToFile(`Post created by ${author} (${author_id}) [Post ID: ${post_id} | Title: ${title}]`);
 }

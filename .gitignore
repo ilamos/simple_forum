@@ -39,6 +39,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 prisma/main.db
-prisma/migrations/20221206004436_init/migration.sql
-prisma/migrations/migration_lock.toml
-logs/log.txt
+
+# prisma migrations
+prisma/migrations/*

@@ -1,4 +1,4 @@
-// Delete post by ID API endpoint
+// noinspection JSUnusedGlobalSymbols
 
 import { postController } from "../../../helpers/api/posts_controller";
 import {stdLog} from "../../../helpers/debug/log_helper";
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         }
 
         if (auth_token) {
-            author_id = userController.verifyAndDecodeAuthToken(auth_token);
+            author_id = await userController.verifyAndDecodeAuthToken(auth_token);
             if (author_id !== undefined && author_id !== NIL_UUID && author_id != null && typeof author_id == "string") {
                 stdLog.log("Author ID: " + author_id, "API");
                 stdLog.log("Post author ID: " + post_data.author_id, "API");

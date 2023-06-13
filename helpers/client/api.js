@@ -10,9 +10,11 @@ export const clientAPIhelper = {
     RegisterUser
 }
 
+const API_URL = "http://localhost:3000/api"
+
 function GetAllPosts(post_title, post_content) {
     return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/posts/get_all_posts", {
+        const response = fetch(`${API_URL}/posts/get_all_posts`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +37,7 @@ function GetAllPosts(post_title, post_content) {
 
 function GetPostByID(postid) {
     return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/posts/get_post_by_id", {
+        const response = fetch(`${API_URL}/posts/get_post_by_id`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +65,7 @@ function EditPostContent(postid, post_content) {
         if (auth_token == null) {
             reject(401);
         }
-        const response = fetch("http://localhost:3000/api/posts/edit_post_content", {
+        const response = fetch(`${API_URL}/posts/edit_post_content`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -87,7 +89,7 @@ function EditPostContent(postid, post_content) {
 function CreatePost(post_title, post_content) {
     return new Promise((resolve, reject) => {
         const auth_token = localStorage.getItem("user_token");
-        const response = fetch("http://localhost:3000/api/posts/create_post", {
+        const response = fetch(`${API_URL}/posts/create_post`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -115,7 +117,7 @@ function DeletePost(postid) {
         if (auth_token == null) {
             reject(401);
         }
-        const response = fetch("http://localhost:3000/api/posts/delete_post", {
+        const response = fetch(`${API_URL}/posts/delete_post`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -137,7 +139,7 @@ function DeletePost(postid) {
 
 function LoginUser(username, password) {
     return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/users/login_user", {
+        const response = fetch(`${API_URL}/users/login_user`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -166,7 +168,7 @@ function LoginUser(username, password) {
 
 function RegisterUser(username, email, password) {
     return new Promise((resolve, reject) => {
-        const response = fetch("http://localhost:3000/api/users/create_user", {
+        const response = fetch(`${API_URL}/users/create_user`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

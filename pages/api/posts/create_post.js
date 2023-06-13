@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { postController } from "../../../helpers/api/posts_controller";
 import { userController } from "../../../helpers/api/users_controller";
 import { stdLog } from "../../../helpers/debug/log_helper";
@@ -5,7 +7,7 @@ import { NIL as NIL_UUID } from "uuid";
 
 
 export default async function handler(req, res) {
-    if (req.method == "POST") {
+    if (req.method === "POST") {
         // Handle create post requests
         const {title, content} = req.body;
         const auth_token = req.headers.auth;
@@ -13,11 +15,17 @@ export default async function handler(req, res) {
         let author_id = NIL_UUID;
         stdLog.log("Create post request: " + title, "API");
 
-        if (auth_token) {
-            author_id = userController.verifyAndDecodeAuthToken(auth_token);
+        if (auth_token && typeof auth_token == "string") {
+            stdLog.log("Auth token: " + JSON.stringify(auth_token), "API")
+            author_id = await userController.verifyAndDecodeAuthToken(auth_token);
+            stdLog.log("Author ID: " + author_id, "API");
             if (author_id !== undefined && author_id !== NIL_UUID && author_id != null && typeof author_id == "string") {
-                stdLog.log("Author ID: " + author_id, "API");
-                author_name = userController.getUserById(author_id).username;
+                let author_user = await userController.getUserById(author_id);
+                stdLog.log("Author user: " + JSON.stringify(author_user), "API");
+                if (author_user !== undefined && author_user !== null) {
+                    author_name = author_user.username;
+                }
+                stdLog.log("Author name: " + author_name, "API");
             }
         }
 
@@ -35,7 +43,7 @@ export default async function handler(req, res) {
         stripped_content = stripped_content.replace(/\r?\n/g, "<br/>") // Fixes newlines
 
 
-        // Add the new post to the posts array
+        // Create the post
         await postController.createPost(title, stripped_content, author_name, author_id)
         res.status(200).json({message: "Post created successfully!"});
     } else {

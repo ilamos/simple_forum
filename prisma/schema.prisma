@@ -6,12 +6,13 @@ datasource db {
     provider = "sqlite"
     url      = "file:main.db"
 }
+
 model User {
     id String @id
-    username String
+    username String @unique
     password String
     token_id String
-    email String
+    email String @unique
 }
 
 model Post  {
