@@ -42,3 +42,6 @@ prisma/main.db
 
 # prisma migrations
 prisma/migrations/*
+
+# logs file
+logs/*
